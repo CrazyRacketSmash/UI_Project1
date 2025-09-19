@@ -12,22 +12,46 @@
   import mockHistory from '../src/data/mockHistory.json';
   import GoalSettings from '../components/GoalSettings.svelte';
   import OverviewPerformance from '../components/OverviewPerformance.svelte';
+  import Customization from '../components/Customization.svelte';
+  import Theme from '../components/Theme.svelte';
+  import Yoga from '../components/Yoga.svelte';
+  import WaterIntake from '../components/WaterIntake.svelte';
 
   let showPrevious = false;
   let showOverview = false;
 
-  let hoursSlept = 7;
+  let hoursSlept = 7; //Sleep
   let sleptWell = false;
 
-  let selectedMoods = [];
+  let selectedMoods = []; //Mood
   let imagePreview = "";
   let caption = "";
 
-  let wentToGym = false;
+  let wentToGym = false; // Gym
   let gymDuration = 0;
 
   let entryDate = new Date().toISOString().split("T")[0];
   let entries = [...mockHistory];
+
+  let yogaDuration = 0;
+  let selectedExercises = [];
+
+  let waterCups = 0;
+  let metWaterGoal = false;
+  // State for activities and theme
+  let showCustomize = false;
+  let allActivities = [
+    { key: 'sleep', label: 'Sleep' },
+    { key: 'gym', label: 'Gym' },
+    { key: 'mood', label: 'Mood' },
+    { key: 'yoga', label: 'Yoga' },
+    { key: 'water', label: 'Water Intake' }
+  ];
+  let activeActivities = ['sleep', 'gym', 'mood'];
+  let lastCustomization = null;
+
+  let theme = 'light';
+  let lastTheme = null;
 
   function saveEntry() {
     const newEntry = {
@@ -43,8 +67,16 @@
   }
 </script>
 
+<Customization
+  bind:showCustomize
+  bind:allActivities
+  bind:activeActivities
+  bind:lastCustomization
+/>
+
 <main>
   <Header name="Huy" />
+  <!-- <Theme bind:theme bind:lastTheme /> -->
   <!-- ShowPrevious -->
   <button class="toggle-btn" on:click={() => showPrevious = !showPrevious}>
     {showPrevious ? "📝 New Entry" : "📖 View Previous Entries"}
@@ -57,29 +89,54 @@
   {:else}
     <Progress totalDays={5} activeDays={3} />
 
-  <Card title="😴 Sleep">
-    <SleepForm bind:hoursSlept bind:sleptWell />
-  </Card>
+  <!-- Conditionally render forms based on active activities -->
+  {#if activeActivities.includes('sleep')}
+    <Card title="😴 Sleep">
+      <SleepForm bind:hoursSlept bind:sleptWell />
+    </Card>
+  {/if}
 
-  <Card title="🏃 Walking / Running">
-    <ExerciseForm />
-  </Card>
+  {#if activeActivities.includes('gym')}
+    <Card title="💪 Gym">
+      <GymForm bind:wentToGym bind:gymDuration />
+    </Card>
+  {/if}
 
-  <Card title="⚡ Energy">
-    <EnergyForm />
-  </Card>
+  {#if activeActivities.includes('energy')}
+    <Card title="⚡ Energy">
+      <EnergyForm />
+    </Card>
+  {/if}
 
-  <Card title="😊 Mood">
-    <MoodForm bind:selectedMoods />
-  </Card>
+  {#if activeActivities.includes('Walking / Running')}
+    <Card title="🏃 Walking / Running">
+      <ExerciseForm />
+    </Card>
+  {/if}
 
-  <Card title="📝 Post about your day">
-    <PostForm bind:imagePreview bind:caption />
-  </Card>
+  {#if activeActivities.includes('mood')}
+    <Card title="😊 Mood">
+      <MoodForm bind:selectedMoods />
+    </Card>
+  {/if}
 
-  <Card title="💪 Gym">
-    <GymForm bind:wentToGym bind:gymDuration />
-  </Card>
+  {#if activeActivities.includes('yoga')}
+    <Card title="🧘 Yoga">
+      <Yoga bind:yogaDuration bind:selectedExercises />
+    </Card>
+  {/if}
+
+  {#if activeActivities.includes('Post about your day')}
+    <Card title="📝 Post about your day">
+      <PostForm bind:imagePreview bind:caption />
+    </Card>
+  {/if}
+
+  {#if activeActivities.includes('water')}
+    <Card title="💧 Water Intake">
+      <WaterIntake bind:waterCups bind:metWaterGoal />
+    </Card>
+  {/if}
 
   <GoalSettings />
 
