@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "date": "2025-09-15",
+    "mood": "Happy",
+    "caption": "Went hiking today!",
+    "image": "hike.jpg",
+    "gym": { "didGym": true, "duration": 60 }
+  },
+  {
+    "id": 2,
+    "date": "2025-09-14",
+    "mood": "Tired",
+    "caption": "Lazy Sunday with movies",
+    "image": "movies.jpg",
+    "gym": { "didGym": false, "duration": 0 }
+  }
+]
