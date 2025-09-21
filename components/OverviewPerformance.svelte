@@ -22,6 +22,20 @@
     : 0;
   $: gymGoalMet = entries.filter(e => (e.gym?.didGym && e.gym.duration >= goals.gym)).length;
   $: gymGoalRate = entries.length ? Math.round((gymGoalMet / entries.length) * 100) : 0;
+
+  // Yoga stats
+  $: avgYoga = entries.length
+    ? (entries.reduce((sum, e) => sum + (e.yoga?.duration || 0), 0) / entries.length).toFixed(1)
+    : 0;
+  $: yogaFreq = entries.filter(e => e.yoga?.duration > 0).length;
+  $: yogaFreqRate = entries.length ? Math.round((yogaFreq / entries.length) * 100) : 0;
+
+  // Water stats  
+  $: avgWater = entries.length
+    ? (entries.reduce((sum, e) => sum + (e.water?.cups || 0), 0) / entries.length).toFixed(1)
+    : 0;
+  $: waterGoalMet = entries.filter(e => e.water?.metGoal).length;
+  $: waterGoalRate = entries.length ? Math.round((waterGoalMet / entries.length) * 100) : 0;
 </script>
 
 <div class="overview">
@@ -38,43 +52,34 @@
     <p>Goal: {goals.gym} min</p>
     <p>Goal Met: {gymGoalRate}% of days</p>
   </div>
+  <div>
+    <h3>Yoga</h3>
+    <p>Average: {avgYoga} min</p>
+    <p>Frequency: {yogaFreqRate}% of days</p>
+  </div>
+  <div>
+    <h3>Water Intake</h3>
+    <p>Average: {avgWater} cups</p>
+    <p>Goal Met: {waterGoalRate}% of days</p>
+  </div>
+  <h3>Sleep Goal Achievement</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Hours Slept</th>
+        <th>Goal Met?</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each sleepGoalDays as day}
+        <tr>
+          <td>{day.date}</td>
+          <td class="center">{day.hours}</td>
+          <td class="center">{day.met ? '✅' : '❌'}</td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
 </div>
 
-<h3>Sleep Goal Achievement</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Hours Slept</th>
-      <th>Goal Met?</th>
-    </tr>
-  </thead>
-  <tbody>
-    {#each sleepGoalDays as day}
-      <tr>
-        <td>{day.date}</td>
-        <td class="center">{day.hours}</td>
-        <td class="center">{day.met ? '✅' : '❌'}</td>
-      </tr>
-    {/each}
-  </tbody>
-</table>
-
-<style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1rem;
-    }
-    th, td {
-        border: 1px solid #ddd;
-        padding: 0.5rem 0.75rem;
-    }
-    th {
-        background: #f5f5f5;
-    }
-    .center {
-        text-align: center;
-        vertical-align: middle;
-    }
-</style>
