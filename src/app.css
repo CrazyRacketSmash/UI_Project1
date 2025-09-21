@@ -11,6 +11,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --primary-blue: #4A90E2;
+  --light-blue: #E3F2FD;
+  --medium-blue: #90CAF9;
+  --dark-blue: #1976D2;
+  --accent-blue: #03A9F4;
+  --bg-blue: #F8FCFF;
+  --text-primary: black;
+  --text-secondary: #64B5F6;
+  --border-blue: #BBDEFB;
 }
 
 body {
@@ -21,7 +31,8 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 2rem;
-  background: #f2f4f8;
+  background: var(--bg-blue) !important;
+  color: var(--text-primary);
 }
 
 /* body.light { background: #fff; color: #222; }
@@ -48,7 +59,8 @@ h1.title {
 }
 
 .card {
-  background: #fff;
+  background: var(--light-blue);
+  border: 1px solid var(--border-blue);
   padding: 1.5rem;
   margin: 1rem 0;
   border-radius: 12px;
@@ -65,21 +77,29 @@ label {
   margin: 0.6rem 0;
 }
 
-input[type="number"] {
+:global(input[type="number"], input[type="text"], textarea, select) {
   margin-left: 0.5rem;
   padding: 0.3rem;
   width: 100px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-blue);
+  background: white;
+  color: var(--text-primary);
+}
+
+:global(input[type="number"]:focus, input[type="text"]:focus, textarea:focus, select:focus) {
+  border-color: var(--primary-blue);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--light-blue);
 }
 
 button.save-btn {
   display: block;
   width: 100%;
   padding: 0.9rem;
-  background: #0077ff;
   color: white;
-  border: none;
+  background: var(--primary-blue);
+  border: 1px solid var(--dark-blue);
   border-radius: 10px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -88,5 +108,148 @@ button.save-btn {
 }
 
 button.save-btn:hover {
-  background: #005fcc;
+  background: var(--dark-blue);
+}
+
+/* Global component styles */
+main {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.toggle-btn {
+  background: var(--medium-blue);
+  color: var(--text-primary);
+  border: 1px solid var(--border-blue);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+
+.toggle-btn:hover {
+  background: var(--primary-blue);
+  color: white;
+}
+
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: var(--light-blue);
+  border: 2px solid var(--border-blue);
+  padding: 2rem;
+  border-radius: 12px;
+  min-width: 300px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+}
+
+.cards-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Stack cards vertically on phones */
+@media (max-width: 768px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Overview Performance styles */
+.overview {
+  max-height: 700px;
+  overflow-y: auto;
+}
+
+.overview table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.overview td {
+  background: white;
+  border: 1px solid var(--border-blue);
+  padding: 0.5rem 0.75rem;
+}
+
+.overview th {
+  background: var(--medium-blue);
+  color: var(--text-primary);
+}
+
+.overview .center {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Toast notification styles */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2000;
+  animation: slideIn 0.3s ease-out;
+}
+
+.toast-content {
+  background: var(--accent-blue);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 250px;
+}
+
+.toast-icon {
+  font-size: 1.2rem;
+}
+
+.toast-message {
+  flex: 1;
+  font-weight: 500;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-close:hover {
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
