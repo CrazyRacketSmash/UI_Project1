@@ -9,7 +9,7 @@
   import PostForm from '../components/Post.svelte';
   import GymForm from '../components/Gym.svelte';
   import PreviousEntries from '../components/History.svelte';
-  import mockHistory from '../src/data/mockHistory.json';
+  import mockHistory from './data/mockHistory.json';
   import GoalSettings from '../components/GoalSettings.svelte';
   import OverviewPerformance from '../components/OverviewPerformance.svelte';
   import Customization from '../components/Customization.svelte';
@@ -36,6 +36,11 @@
   let yogaDuration = 0;
   let selectedExercises = [];
 
+  let energyLevel = "";
+  let tookWalk = false;
+  let wentRunning = false;
+  let distance = 0;
+
   let waterCups = 0;
   let metWaterGoal = false;
   // State for activities and theme
@@ -57,7 +62,21 @@
   let theme = 'light';
   let lastTheme = null;
   let showToast = false;
+  let showGoalSettings = false;
+  let goals = {
+    sleep: 7,
+    gym: 30,
+    yoga: 20,
+    water: 8,
+    exercise: 1
+  };
 
+  $: totalDays = entries.length > 0 ? 
+    // @ts-ignore
+    Math.ceil((new Date() - new Date(entries[entries.length - 1].date)) / (1000 * 60 * 60 * 24)) + 1 : 1;
+  
+  $: activeDays = entries.length;
+  
   function saveEntry() {
     const newEntry = {
       id: Date.now(),
@@ -68,7 +87,9 @@
       caption,
       gym: { didGym: wentToGym, duration: gymDuration },
       yoga: { duration: yogaDuration, exercises: selectedExercises },
-      water: { cups: waterCups, metGoal: metWaterGoal }
+      water: { cups: waterCups, metGoal: metWaterGoal },
+      energy: energyLevel,
+      exercise: { tookWalk, wentRunning, distance }
     };
     entries = [newEntry, ...entries];
     showToast = true;
@@ -87,63 +108,74 @@
   <Header name="Huy" />
   <!-- <Theme bind:theme bind:lastTheme /> -->
   <!-- ShowPrevious -->
-  <button class="toggle-btn" on:click={() => showPrevious = !showPrevious}>
-    {showPrevious ? "New Entry" : "View Previous Entries"}
-  </button>
-  <button class="toggle-btn" on:click={() => showOverview = true}>
-    Show Overview Performance
-  </button>
+  <div class="nav-bar">
+    <button class="toggle-btn" on:click={() => {showPrevious = !showPrevious; showOverview = false;}}>
+      {showPrevious ? "New Entry" : "History"}
+    </button>
+    <button class="toggle-btn" on:click={() => {showOverview = !showOverview; showPrevious = false;}}>
+      {showOverview ? "New Entry" : "Overview Performance"}
+    </button>
+    <button class="toggle-btn" on:click={() => showCustomize = true}>
+      Customize Activities
+    </button>
+    <button class="toggle-btn" on:click={() => showGoalSettings = true}>
+      Set Goals
+    </button>
+  </div>
+  
   {#if showPrevious}
     <PreviousEntries {entries} />
+  {:else if showOverview}
+    <OverviewPerformance {entries} {goals} />
   {:else}
-    <Progress totalDays={5} activeDays={3} />
+    <Progress {totalDays} {activeDays} />
 
   <!-- Render forms based on active activities -->
   <div class="cards-grid">
     {#if activeActivities.includes('sleep')}
-      <Card title="😴 Sleep">
+      <Card title="Sleep" goal={goals.sleep} goalUnit="hours">
         <SleepForm bind:hoursSlept bind:sleptWell />
       </Card>
     {/if}
 
     {#if activeActivities.includes('gym')}
-      <Card title="💪 Gym">
+      <Card title="Gym" goal={goals.gym} goalUnit="min">
         <GymForm bind:wentToGym bind:gymDuration />
       </Card>
     {/if}
 
     {#if activeActivities.includes('mood')}
-      <Card title="😊 Mood">
+      <Card title="Mood">
         <MoodForm bind:selectedMoods />
       </Card>
     {/if}
 
     {#if activeActivities.includes('energy')}
-      <Card title="⚡ Energy">
-        <EnergyForm />
+      <Card title="Energy">
+        <EnergyForm bind:energyLevel />
       </Card>
     {/if}
 
     {#if activeActivities.includes('exercise')}
-      <Card title="🏃 Walking / Running">
-        <ExerciseForm />
+      <Card title="Cardio" goal={goals.exercise} goalUnit="miles">
+        <ExerciseForm bind:tookWalk bind:wentRunning bind:distance />
       </Card>
     {/if}
 
     {#if activeActivities.includes('post')}
-      <Card title="📝 Post about your day">
+      <Card title="Post about your day">
         <PostForm bind:imagePreview bind:caption />
       </Card>
     {/if}
 
     {#if activeActivities.includes('yoga')}
-      <Card title="🧘 Yoga">
+      <Card title="Yoga" goal={goals.yoga} goalUnit="min">
         <Yoga bind:yogaDuration bind:selectedExercises />
       </Card>
     {/if}
 
     {#if activeActivities.includes('water')}
-      <Card title="💧 Water Intake">
+      <Card title="Water Intake" goal={goals.water} goalUnit="cups">
         <WaterIntake bind:waterCups bind:metWaterGoal />
       </Card>
     {/if}
@@ -151,27 +183,13 @@
   {#if showToast}
     <div class="toast">
       <div class="toast-content">
-        <span class="toast-icon">✅</span>
         <span class="toast-message">Entry Saved Successfully!</span>
         <button class="toast-close" on:click={() => showToast = false}>×</button>
       </div>
     </div>
   {/if}
 
-  <GoalSettings />
-
-  <button class="save-btn" on:click={saveEntry}>💾 Save Health Log</button>
-  {/if}
-
-  <!-- Show Overview Modal -->
-  {#if showOverview}
-    <div class="overlay">
-      <div class="modal">
-        <OverviewPerformance {entries} />
-        <br />
-        <button on:click={() => showOverview = false}>OK</button>
-      </div>
-    </div>
+  <button class="save-btn" on:click={saveEntry}>Save Changes</button>
   {/if}
 
   <!-- Toast Notification -->
@@ -183,4 +201,6 @@
       </div>
     </div>
   {/if}
+  <!-- Goal Settings Modal -->
+  <GoalSettings bind:showGoalSettings bind:goals />
 </main>
