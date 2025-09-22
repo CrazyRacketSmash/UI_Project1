@@ -197,16 +197,6 @@
     margin: 0 auto;
   }
 
-  .overview-stats h2 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    background: linear-gradient(135deg, var(--green-primary), var(--green-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
   .stat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
