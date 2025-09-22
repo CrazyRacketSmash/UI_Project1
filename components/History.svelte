@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import entriesData from "../src/data/mockHistory.json";
+  import entriesData from "../data/mockHistory.json";
 
   export let entries = [];
   
@@ -136,7 +136,7 @@
           </div>
           
           {#if entry.image}
-            <img src={entry.image} alt="entry image" class="entry-image" />
+            <img src={entry.image} alt="entry" class="entry-image" />
           {/if}
           
           <div class="caption-section">

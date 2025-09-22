@@ -7,7 +7,9 @@
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        imagePreview = reader.result;
+        if (typeof reader.result === "string") {
+          imagePreview = reader.result;
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -24,7 +26,7 @@
   rows="3"
   placeholder="Write a caption about your day..."
   bind:value={caption}
-/>
+></textarea>
 
 <style>
   .preview {

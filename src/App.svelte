@@ -9,7 +9,7 @@
   import PostForm from '../components/Post.svelte';
   import GymForm from '../components/Gym.svelte';
   import PreviousEntries from '../components/History.svelte';
-  import mockHistory from './data/mockHistory.json';
+  import mockHistory from "../data/mockHistory.json";
   import GoalSettings from '../components/GoalSettings.svelte';
   import OverviewPerformance from '../components/OverviewPerformance.svelte';
   import Customization from '../components/Customization.svelte';
