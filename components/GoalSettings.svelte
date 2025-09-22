@@ -5,7 +5,7 @@
     gym: 30,
     yoga: 20,
     water: 8,
-    exercise: 1 // minimum exercise entries per day
+    exercise: 1
   };
 
   let showSuccessToast = false;
@@ -13,15 +13,14 @@
 
   async function saveGoals() {
     isLoading = true;
-    
-    // Simulate saving process with a slight delay for visual feedback
+    // Simulate saving delay
     await new Promise(resolve => setTimeout(resolve, 800));
     
     isLoading = false;
     showGoalSettings = false;
     showSuccessToast = true;
     
-    // Auto-hide toast after 3 seconds
+    // Hide toast after 3 seconds
     setTimeout(() => {
       showSuccessToast = false;
     }, 3000);
@@ -33,11 +32,10 @@
   <div class="overlay">
     <div class="modal">
       <div class="goals-grid">
-        <!-- Quantitative Goals -->
+        <!-- Goals -->
         <div class="goal-category">          
           <div class="goal-item">
             <div class="goal-header">
-              <span class="goal-icon">🛌</span>
               <span class="goal-label">Sleep Goal</span>
             </div>
             <div class="goal-input-group">
@@ -48,7 +46,6 @@
 
           <div class="goal-item">
             <div class="goal-header">
-              <span class="goal-icon">💪</span>
               <span class="goal-label">Gym Goal</span>
             </div>
             <div class="goal-input-group">
@@ -59,7 +56,6 @@
 
           <div class="goal-item">
             <div class="goal-header">
-              <span class="goal-icon">🧘</span>
               <span class="goal-label">Yoga Goal</span>
             </div>
             <div class="goal-input-group">
@@ -70,22 +66,11 @@
 
           <div class="goal-item">
             <div class="goal-header">
-              <span class="goal-icon">💧</span>
               <span class="goal-label">Water Goal</span>
             </div>
             <div class="goal-input-group">
               <input type="number" bind:value={goals.water} min="0" max="20" />
               <span class="goal-unit">cups</span>
-            </div>
-          </div>
-          <div class="goal-item">
-            <div class="goal-header">
-              <span class="goal-icon">🏃</span>
-              <span class="goal-label">Exercise Tracking</span>
-            </div>
-            <div class="goal-input-group">
-              <input type="number" bind:value={goals.exercise} min="0" max="5" />
-              <span class="goal-unit">miles</span>
             </div>
           </div>
         </div>
@@ -108,7 +93,7 @@
   </div>
 {/if}
 
-<!-- Success Toast Notification -->
+<!-- Notification for success -->
 {#if showSuccessToast}
   <div class="success-toast">
     <div class="toast-content">
@@ -156,11 +141,6 @@
     align-items: center;
     gap: 0.75rem;
     flex: 1;
-  }
-
-  .goal-icon {
-    font-size: 1.5rem;
-    min-width: 1.5rem;
   }
 
   .goal-label {

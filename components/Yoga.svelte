@@ -23,12 +23,12 @@
 
 <div class="yoga-log">
   <label>
-    Yoga Duration (minutes):
+    Duration (minutes):
     <input type="number" min="0" bind:value={yogaDuration} />
   </label>
 
   <fieldset>
-    <legend>Yoga Exercises</legend>
+    <legend>Exercises</legend>
     {#each exercises as ex}
       <label>
         <input

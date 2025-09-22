@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
   export let selectedMoods = [];
   const moods = [
     "Happy", "Excited", "Relaxed", "Grateful", "Focused", "Energetic",

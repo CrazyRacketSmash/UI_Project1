@@ -1,16 +1,11 @@
 <script>
   export let waterCups = 0;
-  export let metWaterGoal = false;
 </script>
 
 <div class="water-log">
   <label>
-    Water Intake (cups):
+    Number of Cups:
     <input type="number" min="0" bind:value={waterCups} />
-  </label>
-  <label>
-    <input type="checkbox" bind:checked={metWaterGoal} />
-    Met daily water goal
   </label>
 </div>
 

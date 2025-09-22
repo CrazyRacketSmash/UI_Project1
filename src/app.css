@@ -12,6 +12,21 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  /* Theme */
+  --primary-color: #00695c;
+  --secondary-color: #26a69a;
+  --accent-color: #4ecdc4;
+  --shadow-color: rgba(0, 105, 92, 0.2);
+  
+  /* Background gradients */
+  --bg-gradient-start: #e8f5e8;
+  --bg-gradient-end: #c8e6c9;
+
+  /* Progress bar */
+  --progress-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(230,255,230,0.8));
+  --progress-track: linear-gradient(90deg, #e0e0e0, #f0f0f0);
+
+  /* Legacy variables */
   --primary-blue: #4A90E2;
   --light-blue: #E3F2FD;
   --medium-blue: #90CAF9;
@@ -34,10 +49,6 @@ body {
   background: var(--bg-blue) !important;
   color: var(--text-primary);
 }
-
-/* body.light { background: #fff; color: #222; }
-body.dark { background: #222; color: #fff; }
-body.blue { background: #e0f0ff; color: #003366; } */
 
 #app {
   max-width: 700px;
@@ -167,7 +178,6 @@ main {
   }
 }
 
-/* Overview Performance styles */
 .overview {
   max-height: 700px;
   overflow-y: auto;
@@ -195,7 +205,6 @@ main {
   vertical-align: middle;
 }
 
-/* Toast notification styles */
 .toast {
   position: fixed;
   top: 20px;

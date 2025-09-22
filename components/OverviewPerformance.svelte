@@ -141,16 +141,16 @@
 
   {#if entries.length > 0}
     <div class="goal-achievement-table">
-      <h3>Goal Achievement Tracker</h3>
+      <h3>Goal Achievement</h3>
       <div class="table-wrapper">
         <table>
           <thead>
             <tr>
               <th>Date</th>
-              <th>Sleep Target: {goals.sleep}h</th>
-              <th>Gym Target: {goals.gym}min</th>
-              <th>Yoga Target: {goals.yoga}min</th>
-              <th>Water Target: {goals.water} cups</th>
+              <th>Sleep</th>
+              <th>Gym</th>
+              <th>Yoga</th>
+              <th>Water</th>
             </tr>
           </thead>
           <tbody>
@@ -269,6 +269,10 @@
     border: 1px solid rgba(76, 175, 80, 0.15);
   }
 
+  thead {
+    background-color: lightskyblue;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -280,7 +284,7 @@
 
   th {
     background: linear-gradient(135deg, var(--green-primary), var(--green-secondary));
-    color: white;
+    color: black;
     padding: 1.2rem 1rem;
     text-align: center;
     font-weight: 600;
@@ -347,11 +351,11 @@
   }
 
   .goal-met {
-    background: rgba(76, 175, 80, 0.04);
+    background: rgba(95, 179, 98, 0.3);
   }
 
   .goal-missed {
-    background: rgba(244, 67, 54, 0.04);
+    background: rgba(201, 82, 74, 0.3);
   }
 
   tr:hover {
