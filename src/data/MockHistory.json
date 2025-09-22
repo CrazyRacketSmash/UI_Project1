@@ -2,17 +2,27 @@
   {
     "id": 1,
     "date": "2025-09-15",
-    "mood": "Happy",
-    "caption": "Went hiking today!",
-    "image": "hike.jpg",
-    "gym": { "didGym": true, "duration": 60 }
+    "sleep": { "hours": 8.5, "quality": true },
+    "mood": "Happy, Energetic, Motivated",
+    "caption": "Went hiking today! Beautiful weather and amazing views. Feeling so grateful for nature.",
+    "image": "/image/hiking.jpg",
+    "gym": { "didGym": true, "duration": 60 },
+    "yoga": { "duration": 30, "exercises": ["Vinyasa Flow", "Sun Salutation"] },
+    "water": { "cups": 9, "metGoal": true },
+    "energy": "high",
+    "exercise": { "tookWalk": true, "wentRunning": false, "distance": 5.2 }
   },
   {
     "id": 2,
     "date": "2025-09-14",
-    "mood": "Tired",
-    "caption": "Lazy Sunday with movies",
-    "image": "movies.jpg",
-    "gym": { "didGym": false, "duration": 0 }
+    "sleep": { "hours": 6, "quality": false },
+    "mood": "Tired, Relaxed",
+    "caption": "Lazy Sunday with movies and comfort food. Sometimes we all need a rest day.",
+    "image": "/image/movie.jpg",
+    "gym": { "didGym": false, "duration": 0 },
+    "yoga": { "duration": 15, "exercises": ["Gentle Stretching"] },
+    "water": { "cups": 6, "metGoal": false },
+    "energy": "low",
+    "exercise": { "tookWalk": false, "wentRunning": false, "distance": 0 }
   }
 ]
