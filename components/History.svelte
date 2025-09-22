@@ -136,7 +136,7 @@
           </div>
           
           {#if entry.image}
-            <img src={entry.image} alt="entry image" class="entry-image" />
+            <img src={entry.image} alt="entry" class="entry-image" />
           {/if}
           
           <div class="caption-section">

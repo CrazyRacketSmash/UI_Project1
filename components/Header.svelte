@@ -78,20 +78,6 @@
     flex-wrap: wrap;
   }
 
-  .title-icon {
-    font-size: 2.2rem;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  .title-accent {
-    background: linear-gradient(45deg, #FFD700, #FFA500);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: 1.5rem;
-    font-weight: 900;
-  }
-
   .welcome-section {
     display: flex;
     flex-direction: column;
@@ -120,10 +106,6 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
-  .wave {
-    animation: wave 2s ease-in-out infinite;
-  }
-
   .time-display {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
@@ -133,10 +115,6 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-  }
-
-  .time-icon {
-    font-size: 1.2rem;
   }
 
   .current-time {
