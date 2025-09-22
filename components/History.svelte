@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import entriesData from "../src/data/mockHistory.json";
+  import entriesData from "../data/mockHistory.json";
 
   export let entries = [];
   
