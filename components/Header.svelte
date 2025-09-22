@@ -1,13 +1,11 @@
 <script>
   export let name;
-  
-  // Get current time and update it every second
   let currentTime = new Date();
   setInterval(() => {
     currentTime = new Date();
   }, 1000);
 
-  // Format time with animation
+  // Time animation
   $: formattedTime = currentTime.toLocaleString('en-US', {
     weekday: 'long',
     year: 'numeric',

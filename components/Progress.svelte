@@ -1,8 +1,10 @@
 <script>
   export let totalDays;
   export let activeDays;
+  export let onIncreaseTotalDays = null; // increase total days
+  export let onDecreaseTotalDays = null; // decrease total days
   $: percent = Math.min((activeDays / totalDays) * 100, 100);
-  $: streakLevel = activeDays >= 7 ? 'fire' : activeDays >= 3 ? 'good' : 'start';
+  $: streakLevel = activeDays >= 0.7*totalDays ? 'fire' : activeDays >= 0.3*totalDays ? 'good' : 'start';
 </script>
 
 <div class="progress-wrapper">
@@ -13,15 +15,27 @@
     </div>
     <div class="streak-indicator">
       {#if streakLevel === 'fire'}
-        🔥
+        <img src="/image/fire.png" alt="Fire" />
       {:else if streakLevel === 'good'}
-        ⭐
+        <img src="/image/star.png" alt="Star" />
       {:else}
-        🌱
+        <img src="/image/leaf.png" alt="Leaf" />
       {/if}
     </div>
     <div class="stat-item">
-      <span class="stat-number">{totalDays}</span>
+      <div class="total-days-container">
+        {#if onDecreaseTotalDays}
+          <button class="minus-btn" on:click={onDecreaseTotalDays} title="Remove days">
+            -
+          </button>
+        {/if}
+        <span class="stat-number">{totalDays}</span>
+        {#if onIncreaseTotalDays}
+          <button class="plus-btn" on:click={onIncreaseTotalDays} title="Add more days">
+            +
+          </button>
+        {/if}
+      </div>
       <span class="stat-label">Total Days</span>
     </div>
   </div>
@@ -37,12 +51,12 @@
 
 <style>
   .progress-wrapper {
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(230,255,230,0.8));
+    background: var(--progress-bg, linear-gradient(135deg, rgba(255,255,255,0.9), rgba(230,255,230,0.8)));
     padding: 1.5rem;
     border-radius: 16px;
     margin: 1rem 0;
-    border: 1px solid rgba(38, 166, 154, 0.2);
-    box-shadow: 0 4px 16px rgba(0, 105, 92, 0.1);
+    border: 1px solid var(--primary-color, #26a69a);
+    box-shadow: 0 4px 16px var(--shadow-color, rgba(0, 105, 92, 0.1));
   }
 
   .stats-container {
@@ -59,16 +73,76 @@
     gap: 0.25rem;
   }
 
+  .total-days-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .plus-btn {
+    background: var(--primary-color, #00695c);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px var(--shadow-color, rgba(0, 105, 92, 0.2));
+  }
+
+  .plus-btn:hover {
+    background: var(--secondary-color, #26a69a);
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px var(--shadow-color, rgba(0, 105, 92, 0.3));
+  }
+
+  .plus-btn:active {
+    transform: scale(0.95);
+  }
+
+  .minus-btn {
+    background: var(--accent-color, #4ecdc4);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px var(--shadow-color, rgba(0, 105, 92, 0.2));
+  }
+
+  .minus-btn:hover {
+    background: var(--secondary-color, #26a69a);
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px var(--shadow-color, rgba(0, 105, 92, 0.3));
+  }
+
+  .minus-btn:active {
+    transform: scale(0.95);
+  }
+
   .stat-number {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #00695c;
-    text-shadow: 0 1px 2px rgba(0, 105, 92, 0.2);
+    color: var(--primary-color, #00695c);
+    text-shadow: 0 1px 2px var(--shadow-color, rgba(0, 105, 92, 0.2));
   }
 
   .stat-label {
     font-size: 0.85rem;
-    color: #26a69a;
+    color: var(--secondary-color, #26a69a);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -89,7 +163,7 @@
   .progress-bar {
     flex: 1;
     height: 16px;
-    background: linear-gradient(90deg, #e0e0e0, #f0f0f0);
+    background: var(--progress-track, linear-gradient(90deg, #e0e0e0, #f0f0f0));
     border-radius: 12px;
     overflow: hidden;
     position: relative;
@@ -130,7 +204,7 @@
 
   .progress-text {
     font-weight: 700;
-    color: #00695c;
+    color: var(--primary-color, #00695c);
     font-size: 1.1rem;
     min-width: 40px;
   }
